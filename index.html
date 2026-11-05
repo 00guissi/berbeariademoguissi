@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Barbearia Exemplo | Campinas</title>
+<style>
+  :root {
+    --preto: #0a0a0a;
+    --carvao: #141414;
+    --dourado: #c9a227;
+    --dourado-claro: #e8c766;
+    --branco: #f5f1e8;
+    --cinza: #8a8478;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    background: var(--preto);
+    color: var(--branco);
+    overflow-x: hidden;
+  }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+    background:
+      radial-gradient(ellipse at center, rgba(201,162,39,0.18) 0%, transparent 60%),
+      linear-gradient(180deg, #050505 0%, #111 100%);
+    overflow: hidden;
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      90deg, transparent 0 80px, rgba(201,162,39,0.03) 80px 81px
+    );
+    pointer-events: none;
+  }
+  .selo {
+    font-size: 0.8rem;
+    letter-spacing: 0.4em;
+    color: var(--dourado);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: subir 1s ease forwards 0.2s;
+  }
+  .hero h1 {
+    font-size: clamp(3rem, 12vw, 9rem);
+    font-weight: 900;
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: subir 1.2s ease forwards 0.5s;
+  }
+  .hero h1 span {
+    display: block;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--dourado);
+  }
+  .frase {
+    margin: 2rem 0 2.5rem;
+    max-width: 520px;
+    font-size: 1.1rem;
+    color: var(--cinza);
+    opacity: 0;
+    animation: subir 1s ease forwards 1s;
+  }
+  .btn {
+    display: inline-block;
+    padding: 1rem 2.4rem;
+    background: var(--dourado);
+    color: var(--preto);
+    text-decoration: none;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+    opacity: 0;
+    animation: subir 1s ease forwards 1.3s;
+  }
+  .btn:hover {
+    background: var(--dourado-claro);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(201,162,39,0.35);
+  }
+
+  /* SECOES */
+  section { padding: 6rem 2rem; }
+  .titulo {
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    font-weight: 900;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+  .subtitulo {
+    text-align: center;
+    color: var(--dourado);
+    letter-spacing: 0.3em;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    margin-bottom: 3.5rem;
+  }
+
+  .servicos {
+    background: var(--carvao);
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .card {
+    border: 1px solid rgba(201,162,39,0.25);
+    padding: 2.5rem 2rem;
+    background: var(--preto);
+    transition: transform 0.4s, border-color 0.4s, box-shadow 0.4s;
+  }
+  .card:hover {
+    transform: translateY(-8px);
+    border-color: var(--dourado);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+  }
+  .card h3 {
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.8rem;
+  }
+  .card p { color: var(--cinza); font-size: 0.95rem; line-height: 1.6; }
+  .preco {
+    display: block;
+    margin-top: 1.2rem;
+    color: var(--dourado);
+    font-weight: 700;
+    font-size: 1.3rem;
+  }
+
+  .horarios { text-align: center; }
+  .tabela {
+    max-width: 480px;
+    margin: 0 auto;
+    border-top: 1px solid rgba(201,162,39,0.3);
+  }
+  .linha {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(201,162,39,0.15);
+    color: var(--branco);
+  }
+  .linha span:last-child { color: var(--cinza); }
+
+  .chamada {
+    background: linear-gradient(135deg, #1a1405 0%, #0a0a0a 100%);
+    text-align: center;
+  }
+  .chamada p {
+    max-width: 560px;
+    margin: 0 auto 2.5rem;
+    color: var(--cinza);
+    font-size: 1.05rem;
+    line-height: 1.6;
+  }
+
+  footer {
+    padding: 3rem 2rem;
+    text-align: center;
+    border-top: 1px solid rgba(201,162,39,0.2);
+    color: var(--cinza);
+    font-size: 0.85rem;
+    line-height: 1.8;
+  }
+  footer strong { color: var(--dourado); letter-spacing: 0.15em; text-transform: uppercase; }
+
+  /* Animacao de revelar ao rolar */
+  .revelar {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+  .revelar.visivel { opacity: 1; transform: none; }
+
+  @keyframes subir {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  @media (max-width: 600px) {
+    section { padding: 4rem 1.25rem; }
+    .linha { font-size: 0.95rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <p class="selo">Desde 2010 · Campinas</p>
+  <h1>Barbearia<span>Exemplo</span></h1>
+  <p class="frase">Corte com precisão, barba com identidade. Cada detalhe pensado para você sair com cara de quem sabe o que quer.</p>
+  <a class="btn" href="https://wa.me/5519900000000?text=Oi%2C%20quero%20agendar%20um%20hor%C3%A1rio" target="_blank" rel="noopener">Agendar pelo WhatsApp</a>
+</header>
+
+<section class="servicos">
+  <p class="subtitulo revelar">Serviços</p>
+  <h2 class="titulo revelar">O que fazemos</h2>
+  <div class="grid">
+    <div class="card revelar">
+      <h3>Corte Clássico</h3>
+      <p>Tesoura e máquina, com acabamento na navalha e lavagem inclusa.</p>
+      <span class="preco">R$ 45</span>
+    </div>
+    <div class="card revelar">
+      <h3>Barba Completa</h3>
+      <p>Modelagem, toalha quente e óleo para hidratar e finalizar.</p>
+      <span class="preco">R$ 35</span>
+    </div>
+    <div class="card revelar">
+      <h3>Combo Premium</h3>
+      <p>Corte e barba com sobrancelha, do jeito que você merece sair.</p>
+      <span class="preco">R$ 75</span>
+    </div>
+  </div>
+</section>
+
+<section class="horarios">
+  <p class="subtitulo revelar">Horários</p>
+  <h2 class="titulo revelar">Quando estamos abertos</h2>
+  <div class="tabela revelar" style="margin-top:2.5rem">
+    <div class="linha"><span>Segunda a sexta</span><span>09h às 20h</span></div>
+    <div class="linha"><span>Sábado</span><span>08h às 18h</span></div>
+    <div class="linha"><span>Domingo</span><span>Fechado</span></div>
+  </div>
+</section>
+
+<section class="chamada">
+  <h2 class="titulo revelar">Marque seu horário</h2>
+  <p class="revelar" style="margin-top:1.5rem">Atendimento com hora marcada para você não esperar. Fale com a gente agora.</p>
+  <a class="btn revelar" href="https://wa.me/5519900000000?text=Oi%2C%20quero%20agendar%20um%20hor%C3%A1rio" target="_blank" rel="noopener" style="opacity:1;animation:none">Chamar no WhatsApp</a>
+</section>
+
+<footer>
+  <strong>Barbearia Exemplo</strong><br>
+  Rua Exemplo, 123 · Centro · Campinas, SP<br>
+  Atendimento de segunda a sábado
+</footer>
+
+<script>
+  const observador = new IntersectionObserver((entradas) => {
+    entradas.forEach((e) => {
+      if (e.isIntersecting) {
+        e.target.classList.add("visivel");
+        observador.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll(".revelar").forEach((el) => observador.observe(el));
+</script>
+
+</body>
+</html>
